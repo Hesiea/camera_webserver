@@ -1,6 +1,4 @@
 /*
- * Author: Pipisara Chandrabhanu
- *
  * This code implements a web server on the ESP32 to stream live video from an OV2640 camera module.
  * The server allows users to view a live JPEG stream, capture individual JPEG images, and control 
  * the camera's flash LED remotely via a web interface. WiFi is used to establish the connection, 
