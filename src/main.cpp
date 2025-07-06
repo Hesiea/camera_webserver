@@ -28,6 +28,8 @@
 const char* ssid = "realmeGTHe";  // Replace with your WiFi SSID
 const char* password = "12345678";    // Replace with your WiFi password
 
+//修改为手机热点名称后，在手机浏览器输入对应网址观察信息
+
 
 OV2640 cam;              // Initialize the camera object
 WebServer server(80);    // Create a web server object on port 80
