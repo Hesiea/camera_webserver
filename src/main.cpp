@@ -177,11 +177,11 @@ void loop()
     Serial.println("/live");
 
     // Print flash control URLs to the serial monitor
-    Serial.print("Flash ON URL: http://");
+    //Serial.print("Flash ON URL: http://");
     Serial.print(ip);
     Serial.println("/on");
 
-    Serial.print("Flash OFF URL: http://");
+    //Serial.print("Flash OFF URL: http://");
     Serial.print(ip);
     Serial.println("/off");
 
