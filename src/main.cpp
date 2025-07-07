@@ -19,8 +19,8 @@
 
 
 // WiFi credentials
-// const char* ssid = "OMENHE";  // Replace with your WiFi SSID
-// const char* password = "818Y95g0";    // Replace with your WiFi password
+// const char* ssid = "HONOR";  // Replace with your WiFi SSID
+// const char* password = "11111111";    // Replace with your WiFi password
 
 const char* ssid = "realmeGTHe";  // Replace with your WiFi SSID
 const char* password = "12345678";    // Replace with your WiFi password
@@ -108,39 +108,9 @@ void setup()
   Serial.begin(115200);  // Start the serial communication at 115200 baud rate
   Serial.println("ESP32-S3 Camera Test");
   
-  // Camera configuration
-  camera_config_t config;
-
-  config.pin_d0 = 40;
-  config.pin_d1 = 42;
-  config.pin_d2 = 41;
-  config.pin_d3 = 2;
-  config.pin_d4 = 6;
-  config.pin_d5 = 1;
-  config.pin_d6 = 5;
-  config.pin_d7 = 14;//
-  config.pin_xclk = -1;
-  config.pin_pclk = 39;//
-  config.pin_vsync =11;
-  config.pin_href = 9;
-  config.pin_sccb_sda = 10;
-  config.pin_sccb_scl = 21;
-  config.pin_pwdn = -1;
-  config.pin_reset =-1;
-
-  // 时钟和像素格式配置
-  config.xclk_freq_hz = 20000000; // XCLK 频率 20MHz
-  config.ledc_timer = LEDC_TIMER_0;
-  config.ledc_channel = LEDC_CHANNEL_0;
-  config.pixel_format = PIXFORMAT_JPEG; // 输出格式为JPEG
-  config.fb_location = CAMERA_FB_IN_PSRAM; // **关键**: ESP32-S3必须使用PSRAM作为帧缓冲区
-  config.frame_size = FRAMESIZE_VGA; // , S3的PSRAM可以轻松支持更高分辨率
-  config.jpeg_quality = 12; // 0-63, 数字越小质量越高
-  config.fb_count = 2; // 使用2个帧缓冲区，可以提高流传输的流畅度
-  config.grab_mode = CAMERA_GRAB_LATEST; // 获取最新的帧
-
   // 初始化摄像头
-  esp_err_t err = cam.init(config);
+  esp_err_t err = cam.init(esp32s3_devkitc1_config);
+  
   if (err != ESP_OK) {
       Serial.printf("Camera init failed with error 0x%x", err);
       return;

@@ -11,6 +11,7 @@
 
 #define TAG "OV2640"
 
+
 // definitions appropriate for the ESP32-CAM devboard (and most clones)
 camera_config_t esp32cam_config{
 
@@ -40,8 +41,8 @@ camera_config_t esp32cam_config{
     // .frame_size = FRAMESIZE_UXGA, // needs 234K of framebuffer space
     // .frame_size = FRAMESIZE_SXGA, // needs 160K for framebuffer
     // .frame_size = FRAMESIZE_XGA, // needs 96K or even smaller FRAMESIZE_SVGA - can work if using only 1 fb
-    .frame_size = FRAMESIZE_SVGA,
-    .jpeg_quality = 12, //0-63 lower numbers are higher quality
+    .frame_size = FRAMESIZE_QVGA,//分辨率
+    .jpeg_quality = 4, //0-63 lower numbers are higher quality
     .fb_count = 2       // if more than one i2s runs in continous mode.  Use only with jpeg
 };
 
@@ -109,6 +110,42 @@ camera_config_t esp32cam_ttgo_t_config{
     .jpeg_quality = 12, //0-63 lower numbers are higher quality
     .fb_count = 2       // if more than one i2s runs in continous mode.  Use only with jpeg
 };
+
+
+// definitions appropriate for the ESP32-S3-DevKitC-1 board
+camera_config_t esp32s3_devkitc1_config{
+    .pin_pwdn = -1,
+    .pin_reset = -1,
+    .pin_xclk = -1,
+
+    .pin_sccb_sda = 10,
+    .pin_sccb_scl = 21,
+
+    .pin_d7 = 14,
+    .pin_d6 = 5,
+    .pin_d5 = 1,
+    .pin_d4 = 6,
+    .pin_d3 = 2,
+    .pin_d2 = 41,
+    .pin_d1 = 42,
+    .pin_d0 = 40,
+
+    .pin_vsync = 11,
+    .pin_href = 9,
+    .pin_pclk = 39,
+
+    // XCLK, 像素格式和帧大小等配置 (XCLK, Pixel Format, Frame Size etc.)
+    .xclk_freq_hz = 20000000,
+    .ledc_timer = LEDC_TIMER_0,
+    .ledc_channel = LEDC_CHANNEL_0,
+    .pixel_format = PIXFORMAT_JPEG,
+    .frame_size = FRAMESIZE_VGA,// needs 30K for framebuffer
+    .jpeg_quality = 12, //0-63 lower numbers are higher quality
+    .fb_count = 2,      // if more than one i2s runs in continuous mode. Use only with jpeg
+    .fb_location = CAMERA_FB_IN_PSRAM,      // Use PSRAM for frame buffer storage
+    .grab_mode = CAMERA_GRAB_LATEST         
+};
+
 
 void OV2640::run(void)
 {
