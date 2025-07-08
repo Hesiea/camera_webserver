@@ -16,6 +16,7 @@
 #include <WebServer.h>   // Include web server library for serving web requests
 #include <WiFiClient.h>  // Include WiFi client library for handling client connections
 #include <Arduino.h>
+#include <mqtt_manager.h> // Include MQTT manager for handling MQTT messages
 
 
 // WiFi credentials
@@ -24,6 +25,7 @@
 
 const char* ssid = "realmeGTHe";  // Replace with your WiFi SSID
 const char* password = "12345678";    // Replace with your WiFi password
+const char* mqtt_server = "106.55.186.212";  // 您服务器的公网IP地址
 
 //修改为手机热点名称后，在手机浏览器输入对应网址观察信息
 
@@ -83,6 +85,17 @@ void handle_jpg(void)
   cam.run();  // Capture an image from the camera
   if (!client.connected()) return;  // Stop if the client disconnects
 
+
+   // MQTT调试
+ char payload[128];
+ const char* path = "/jpg"; // 图片未保存到文件，因此使用端点名称作为路径
+ size_t image_size = cam.getSize(); // 获取图像大小
+
+ // 构建JSON负载并发布到MQTT主题
+ sprintf(payload, "{\"event\":\"photo_saved\", \"path\":\"%s\", \"size\":%u}", path, image_size);
+ mqtt_publish("/pillbox/status", payload);
+
+
   client.write(JHEADER, jhdLen);  // Send the header to the client
   client.write((char *)cam.getfb(), cam.getSize());  // Send the image data to the client
 }
@@ -120,11 +133,17 @@ void setup()
   // Initialize WiFi in station mode
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);  // Connect to the WiFi network using credentials
+
+  mqtt_init(mqtt_server); // <<<< 初始化MQTT
+
 }
 
 // Main loop function to handle WiFi connection and client requests
 void loop()
 {
+
+  mqtt_loop(); // <<<< 处理MQTT消息
+
   unsigned long currentMillis = millis();  // Get the current time
 
   // If not connected to WiFi
