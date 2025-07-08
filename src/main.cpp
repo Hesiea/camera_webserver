@@ -25,7 +25,7 @@
 
 const char* ssid = "realmeGTHe";  // Replace with your WiFi SSID
 const char* password = "12345678";    // Replace with your WiFi password
-const char* mqtt_server = "106.55.186.212";  // 您服务器的公网IP地址
+const char* mqtt_server = "";  // 您服务器的公网IP地址
 
 //修改为手机热点名称后，在手机浏览器输入对应网址观察信息
 
